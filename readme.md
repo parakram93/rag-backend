@@ -24,13 +24,13 @@ API with Redis chat memory and LLM-driven interview booking.
 ## APIs
 
 ### POST /documents/ingest
-Multipart form: `file` (.pdf or .txt) and `strategy` (`recursive` or `sentence`).
+Takes .pdf or .txt files only. uses `recursive` or `sentence` chunking strategy.
 Extracts text, chunks it, embeds the chunks, stores vectors in Qdrant and
 metadata in SQL. Returns `doc_id`, filename, strategy and chunk count.
 Errors: 415 for unsupported types, 422 for files with no extractable text.
 
 ### POST /chat
-JSON body: `session_id`, `message`, optional `doc_id` (restricts search to one document).
+JSON body: `session_id`, `message`, optional `doc_id`.
 Returns the answer and the page numbers of the chunks used.
 The same endpoint handles interview booking: it detects the intent, collects
 name, email, date and time across turns, validates them, and saves the booking.
